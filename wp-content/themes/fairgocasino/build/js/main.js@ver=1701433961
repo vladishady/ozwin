@@ -1,0 +1,167 @@
+"use strict";
+document.addEventListener("DOMContentLoaded", (function () {
+    var e = document.querySelectorAll(".sub-menu__arrow");
+    e && e.forEach((function (e) {
+        e.addEventListener("click", (function (e) {
+            e.currentTarget.parentElement.classList.toggle("active")
+        }))
+    }));
+    var t = document.querySelector(".page-header__burger");
+    t && t.addEventListener("click", (function (e) {
+        var t = e.currentTarget, a = document.querySelector(".main-nav");
+        t.classList.toggle("active"), a.classList.toggle("active")
+    }));
+    var a = document.querySelectorAll(".video");
+    a && a.forEach((function (e) {
+        e.addEventListener("click", (function (e) {
+            var t = e.currentTarget, a = (e.target, t.querySelector(".video__preview")),
+                o = t.querySelector(".video__button"), c = t.querySelector(".video__container"), r = t.dataset.url,
+                i = document.createElement("iframe");
+            i.setAttribute("allowfullscreen", ""), i.setAttribute("allow", "autoplay"), i.setAttribute("src", r + "?rel=0&showinfo=0&autoplay=1"), i.classList.add("video__media"), a.remove(), o.remove(), c.appendChild(i)
+        }))
+    }));
+    // var c = document.querySelectorAll("[data-faq-item]");
+    // c && c.forEach((function (e) {
+    //     e.addEventListener("click", (function (e) {
+    //         var t = e.currentTarget, a = e.target, o = t.querySelector("[data-faq-item-question]"),
+    //             c = t.querySelector("[data-faq-item-answer]");
+    //         a === o && c.classList.toggle("active")
+    //     }))
+    // }));
+    var r = document.querySelectorAll("[data-toc]");
+    r && r.forEach((function (e) {
+        e.addEventListener("click", (function (e) {
+            var t = e.currentTarget, a = t.querySelector("[data-toc-title]");
+            e.target === a && t.classList.toggle("active")
+        }))
+    }));
+    // var i = document.querySelector(".mobile-button");
+    // if (i) {
+    //     var n = i.querySelector(".mobile-button__link--show");
+    //     n && n.addEventListener("click", (function () {
+    //         n.closest(".mobile-button").classList.toggle("_active")
+    //     }))
+    // }
+    var l = document.querySelector(".scroll-top__button");
+    l && l.addEventListener("click", (function () {
+        window.scrollTo({top: 0, behavior: "smooth"})
+    }));
+    // document.addEventListener("scroll", (function () {
+    //     window.scrollY > 400 ? (l && (l.style.visibility = "visible"), i && (i.style.visibility = "visible")) : (l && (l.style.visibility = "hidden"), i && (i.style.visibility = "hidden", i.classList.remove("_active")))
+    // }));
+    var s = document.querySelectorAll("._sf-link");
+    s && s.forEach((function (e) {
+        e.addEventListener("click", (function () {
+            var t = e.dataset.sfA;
+            t && (document.location.href = atob(t))
+        }))
+    }));
+    var u = document.querySelectorAll("._button-link");
+    u && u.forEach((function (e) {
+        e.addEventListener("click", (function () {
+            var t = e.dataset.sfA;
+            t && (document.location.href = t)
+        }))
+    }));
+    var d = document.querySelectorAll(".video-v2");
+    d && d.forEach((function (e) {
+        var t = e.querySelector(".video-v2__button"), a = e.querySelector(".video-v2__player");
+        t.addEventListener("click", (function () {
+            e.classList.add("_active"), a.setAttribute("controlsList", "nodownload"), a.setAttribute("controls", ""), a.play()
+        }))
+    }));
+    // var v = document.querySelectorAll(".tabs");
+    // v && v.forEach((function (e) {
+    //     var t = e.querySelectorAll(".tabs__header-button"), a = e.querySelectorAll(".tabs__item");
+    //     t && t[0].classList.add("active"), a.forEach((function (e) {
+    //         e.classList.add("visually-hidden")
+    //     })), a && a[0].classList.remove("visually-hidden")
+    // }));
+    // var f = document.querySelectorAll(".tabs__header-button");
+    // f && f.forEach((function (e) {
+    //     e.addEventListener("click", (function () {
+    //         var t = e.dataset.tabTitle, a = e.closest(".tabs");
+    //         a.querySelectorAll(".tabs__header-button").forEach((function (e) {
+    //             e.dataset.tabTitle == t ? e.classList.add("active") : e.classList.contains("active") && e.classList.remove("active")
+    //         })), a.querySelectorAll(".tabs__item").forEach((function (e) {
+    //             e.dataset.tabContent == t ? e.classList.remove("visually-hidden") : e.classList.contains("visually-hidden") || e.classList.add("visually-hidden")
+    //         }))
+    //     }))
+    // }));
+    // var m = document.querySelector("[data-auto-toc]");
+    // m && m.querySelector("[data-auto-toc-button]").addEventListener("click", (function () {
+    //     m.classList.toggle("active")
+    // }))
+
+
+    const demo_btns = document.querySelectorAll('.slots__demo-button');
+    const popup = document.querySelector('.popup');
+    const cross = document.querySelector('.popup__cross')
+
+    if (demo_btns && popup) {
+        demo_btns.forEach(btn => {
+            btn.onclick = (e) => {
+
+                const embed_link = e.target.dataset.embed;
+                const button = e.target.closest('.slots__item').querySelector('.slots__button._button-link')
+                const title = e.target.closest('.slots__item').querySelector('.slots__title')
+
+                let iframe = document.createElement("iframe");
+                iframe.setAttribute("src", embed_link);
+                iframe.setAttribute("frameborder", "0");
+
+                if (title) document.querySelector('.popup__title').innerText = title.innerText
+                if (button) document.querySelector('.popup__buttons').innerHTML = button.outerHTML
+                if (iframe) document.querySelector('.popup__content').innerHTML = iframe.outerHTML
+
+                popup.classList.add('_active')
+            }
+        })
+    }
+
+
+    if (cross && popup)
+        cross.onclick = (e) => {
+            e.target.closest('.popup').classList.remove('_active');
+
+            document.querySelector('.popup__title').innerText = ""
+            document.querySelector('.popup__buttons').innerHTML = ""
+            document.querySelector('.popup__content').innerHTML = ""
+        }
+
+    if (popup)
+        popup.onclick = (e) => {
+            if (!e.target.classList.contains("popup")) return false
+
+            e.target.classList.remove('_active');
+
+            document.querySelector('.popup__title').innerText = ""
+            document.querySelector('.popup__buttons').innerHTML = ""
+            document.querySelector('.popup__content').innerHTML = ""
+        }
+
+
+
+    const copy_btns = document.querySelectorAll('.copy-btn');
+
+    if (copy_btns){
+        copy_btns.forEach(copy_btn => {
+            copy_btn.onclick = e => {
+                const promo = e.target.closest('.promocode').querySelector('.promocode-field').innerText
+                const button_inner = e.target.innerHTML
+
+                let tmp = document.createElement('textarea')
+                tmp.value = promo
+                e.target.appendChild(tmp)
+                tmp.select()
+                document.execCommand('copy')
+                tmp.remove()
+                e.target.textContent = 'COPIED'
+                setTimeout(() => {
+                    e.target.innerHTML = button_inner
+                }, 3000)
+            }
+        })
+    }
+}));
+
